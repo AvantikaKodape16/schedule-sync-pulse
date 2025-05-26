@@ -71,16 +71,16 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
           <div className="space-y-2">
             <Label>Task Type</Label>
             <Select
-              value={filters.taskType || ''}
-              onValueChange={(value: TaskType | '') => 
-                onFiltersChange({ ...filters, taskType: value || undefined })
+              value={filters.taskType || 'all-types'}
+              onValueChange={(value: string) => 
+                onFiltersChange({ ...filters, taskType: value === 'all-types' ? undefined : value as TaskType })
               }
             >
               <SelectTrigger>
                 <SelectValue placeholder="All types" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All types</SelectItem>
+                <SelectItem value="all-types">All types</SelectItem>
                 {taskTypes.map((type) => (
                   <SelectItem key={type} value={type}>
                     {type}
@@ -93,16 +93,16 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
           <div className="space-y-2">
             <Label>Status</Label>
             <Select
-              value={filters.status || ''}
-              onValueChange={(value: 'open' | 'closed' | '') => 
-                onFiltersChange({ ...filters, status: value || undefined })
+              value={filters.status || 'all-statuses'}
+              onValueChange={(value: string) => 
+                onFiltersChange({ ...filters, status: value === 'all-statuses' ? undefined : value as 'open' | 'closed' })
               }
             >
               <SelectTrigger>
                 <SelectValue placeholder="All statuses" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All statuses</SelectItem>
+                <SelectItem value="all-statuses">All statuses</SelectItem>
                 <SelectItem value="open">Open</SelectItem>
                 <SelectItem value="closed">Closed</SelectItem>
               </SelectContent>
@@ -112,16 +112,16 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
           <div className="space-y-2">
             <Label>Contact Person</Label>
             <Select
-              value={filters.contactPerson || ''}
+              value={filters.contactPerson || 'all-members'}
               onValueChange={(value) => 
-                onFiltersChange({ ...filters, contactPerson: value || undefined })
+                onFiltersChange({ ...filters, contactPerson: value === 'all-members' ? undefined : value })
               }
             >
               <SelectTrigger>
                 <SelectValue placeholder="All members" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All members</SelectItem>
+                <SelectItem value="all-members">All members</SelectItem>
                 {teamMembers.map((member) => (
                   <SelectItem key={member} value={member}>
                     {member}
