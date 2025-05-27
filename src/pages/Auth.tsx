@@ -21,7 +21,7 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
       });
@@ -29,7 +29,14 @@ const Auth = () => {
       if (error) {
         toast.error(error.message);
       } else {
-        toast.success('Account created successfully! Please sign in.');
+        // Check if email confirmation is disabled
+        if (data.user && !data.user.email_confirmed_at) {
+          toast.success('Account created! Please check your email to confirm your account, or ask your admin to disable email confirmation for instant access.');
+        } else {
+          // If email confirmation is disabled, user is automatically signed in
+          toast.success('Account created and signed in successfully!');
+          navigate('/');
+        }
       }
     } catch (error) {
       toast.error('An unexpected error occurred');
